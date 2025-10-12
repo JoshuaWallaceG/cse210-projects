@@ -10,6 +10,7 @@ class Program
         do
         {
             userChoice = Menu.GetMenuChoice();
+            Console.Clear();
             switch (userChoice)
             {
                 case 1:
@@ -25,16 +26,10 @@ class Program
                 case 4:
                     currentJournal.SaveToFile();
                     break;
-                case 7:
-                    string prompt = PromptGenerator.GeneratePrompt();
-                    Console.WriteLine(prompt);
-                    break;
             }
-                
-        } while (userChoice != 0);
-    }
-    
 
-    /////
+        } while (userChoice != 0);
+        Console.WriteLine("Goodbye!");
+    }
 
 }

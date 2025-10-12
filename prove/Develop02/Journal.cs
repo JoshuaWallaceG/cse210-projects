@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
@@ -10,7 +11,7 @@ class Journal
     {
         string userText;
         //Prompt user
-        string prompt = "What was the best part of today?";
+        string prompt = PromptGenerator.GeneratePrompt();
         Console.WriteLine($"{prompt}");
 
         //Get input
@@ -27,60 +28,53 @@ class Journal
         userEntry._date = dateText;
         _entries.Add(userEntry);
 
+        Console.WriteLine("...Entry recorded...");
+
         //_entries.Add(new Entry(userText, dateText, prompt));
 
     }
     public void DisplayJournal()
     {
+        Console.WriteLine("...Displaying journal entries...");
         foreach (Entry entry in _entries)
         {
             entry.DisplayEntry();
         }
+        Console.WriteLine("...End of entries...");
     }
-
 
     public void LoadFromFile()
     {
         bool fileLoaded;
         string fileName;
-        int lineAmount = 0;
         List<string> lines = new List<string>();
         do
         {
             Console.Write("Please enter your file name: ");
             fileName = Console.ReadLine();
-            //List of if statements to filter out bad file entries (empty or non extistant)
+            //Checks to see if file exists, wont continue until real file is presented.
             if (File.Exists(fileName))
             {
+                //Because SaveToFile saves each entry as a set of 3 lines (prompt, date, entry)...
+                //We must load files as a batch of 3 lines
                 lines = System.IO.File.ReadAllLines(fileName).ToList();
-                lineAmount = lines.Count;
-                if (lineAmount == 0)
+                for (int i = 0; i < lines.Count; i = i + 3)
                 {
-                    Console.WriteLine($"The journal \"{fileName}\" is empty.");
-                    fileLoaded = false;
+                    Entry userEntry = new Entry();
+                    userEntry._date = lines[i];
+                    userEntry._prompt = lines[i + 1];
+                    userEntry._entry = lines[i + 2];
+                    _entries.Add(userEntry);
                 }
-                else
-                {
-                    Console.WriteLine($"The journal \"{fileName}\" has been loaded.");
-                    fileLoaded = true;
-                }
+                Console.WriteLine($"...The journal \"{fileName}\" has been loaded...");
+                fileLoaded = true;
             }
             else
             {
-                Console.WriteLine($"The journal \"{fileName}\" does not exist.");
+                Console.WriteLine($"...The journal \"{fileName}\" does not exist...");
                 fileLoaded = false;
             }
         } while (!fileLoaded);
-        
-        Console.WriteLine($"DEBUG: LINE COUNT IS {lineAmount}, ENTRY COUNT IS {lineAmount / 3}");
-        for (int i = 0; i < lineAmount; i = i + 3)
-        {
-            Entry userEntry = new Entry();
-            userEntry._date = lines[i];
-            userEntry._prompt = lines[i + 1];
-            userEntry._entry = lines[i + 2];
-            _entries.Add(userEntry);
-        }
 
     }
     public void SaveToFile()
@@ -97,5 +91,6 @@ class Journal
                 outputFile.WriteLine(entry._entry);
             }
         }
+        Console.WriteLine($"...The journal \"{fileName}\" has been saved...");
     }
 }

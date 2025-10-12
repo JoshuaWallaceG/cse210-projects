@@ -1,4 +1,0 @@
-This is line 1!
-This is now line 2
-And this is line 3!
-Finally, we have line 4
