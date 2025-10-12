@@ -18,7 +18,7 @@ class Journal
         userText = Console.ReadLine();
 
         //Prompt user
-        Console.WriteLine("In 1 word, how would you describe your mood for the day?");
+        Console.WriteLine("In 1 word, how would you describe your mood right now?");
 
         //Get input
         userMood = Console.ReadLine();
@@ -36,13 +36,11 @@ class Journal
         _entries.Add(userEntry);
 
         Console.WriteLine("...Entry recorded...");
-        Console.Write("\a");
-
-        //_entries.Add(new Entry(userText, dateText, prompt));
 
     }
     public void DisplayJournal()
     {
+        //Display all entries contained in journal
         Console.WriteLine("...Displaying journal entries...");
         foreach (Entry entry in _entries)
         {
@@ -93,6 +91,7 @@ class Journal
         fileName = Console.ReadLine();
         using (StreamWriter outputFile = new StreamWriter(fileName))
         {
+            //Seperates each part of the entry by new line
             foreach (Entry entry in _entries)
             {
                 outputFile.WriteLine(entry._date);

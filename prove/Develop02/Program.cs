@@ -7,6 +7,7 @@ class Program
     {
         Journal currentJournal = new Journal();
         int userChoice;
+        //Menu is heavily abstracted for readibility sake
         do
         {
             userChoice = Menu.GetMenuChoice();
@@ -26,8 +27,8 @@ class Program
                 case 4:
                     currentJournal.SaveToFile();
                     break;
+                //No need for default switch case because GetMenuChoice will never return a value outside of 1-4
             }
-
         } while (userChoice != 0);
         Console.WriteLine("Goodbye!");
     }

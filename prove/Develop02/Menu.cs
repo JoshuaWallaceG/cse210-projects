@@ -21,6 +21,7 @@ public static class Menu
         DisplayMenuOptions();
         do
         {
+            //Validity checks for menu options
             menuChoice = int.Parse(Console.ReadLine());
             if (menuChoice > 4 || menuChoice < 0)
             {
