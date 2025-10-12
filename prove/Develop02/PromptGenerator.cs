@@ -10,8 +10,15 @@ public static class PromptGenerator
         "Who was the most interesting person I interacted with today?",
         "What was the best part of my day?",
         "How did I see the hand of the Lord in my life today?",
-        "What was the strongest emotion I felt today?",
-        "If I had one thing I could do over today, what would it be?"
+        "If I had one thing I could do over today, what would it be?",
+        "Who did I talk to most today?",
+        "who did I help or connect with today?",
+        "Who made my day better (or worse)?",
+        "What conversation or moment stuck with me?",
+        "What am I grateful for right now?",
+        "What did I learn or notice about myself today?",
+        "What do I want to remember about today a year from now?",
+        "What could make tomorrow a little better?",
     };
     
     public static string GeneratePrompt()

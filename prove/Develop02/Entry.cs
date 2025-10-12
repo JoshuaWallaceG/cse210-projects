@@ -1,6 +1,7 @@
 class Entry()
 {
     public string _entry;
+    public string _mood;
     public string _date;
     public string _prompt;
     // public Entry(string entry, string date, string prompt)
@@ -14,6 +15,7 @@ class Entry()
     {
         Console.WriteLine($"{_prompt} - {_date}");
         Console.WriteLine(_entry);
+        Console.WriteLine($"Mood of the day: {_mood}");
     }
     
 

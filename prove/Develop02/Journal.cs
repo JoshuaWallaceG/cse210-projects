@@ -9,13 +9,19 @@ class Journal
 
     public void AddEntry()
     {
-        string userText;
+        string userText, userMood;
         //Prompt user
         string prompt = PromptGenerator.GeneratePrompt();
         Console.WriteLine($"{prompt}");
 
         //Get input
         userText = Console.ReadLine();
+
+        //Prompt user
+        Console.WriteLine("In 1 word, how would you describe your mood for the day?");
+
+        //Get input
+        userMood = Console.ReadLine();
 
         //Get date/time
         DateTime theCurrentTime = DateTime.Now;
@@ -25,10 +31,12 @@ class Journal
         Entry userEntry = new Entry();
         userEntry._prompt = prompt;
         userEntry._entry = userText;
+        userEntry._mood = userMood; 
         userEntry._date = dateText;
         _entries.Add(userEntry);
 
         Console.WriteLine("...Entry recorded...");
+        Console.Write("\a");
 
         //_entries.Add(new Entry(userText, dateText, prompt));
 
@@ -58,12 +66,13 @@ class Journal
                 //Because SaveToFile saves each entry as a set of 3 lines (prompt, date, entry)...
                 //We must load files as a batch of 3 lines
                 lines = System.IO.File.ReadAllLines(fileName).ToList();
-                for (int i = 0; i < lines.Count; i = i + 3)
+                for (int i = 0; i < lines.Count; i = i + 4)
                 {
                     Entry userEntry = new Entry();
                     userEntry._date = lines[i];
                     userEntry._prompt = lines[i + 1];
                     userEntry._entry = lines[i + 2];
+                    userEntry._mood = lines[i + 3];
                     _entries.Add(userEntry);
                 }
                 Console.WriteLine($"...The journal \"{fileName}\" has been loaded...");
@@ -89,6 +98,7 @@ class Journal
                 outputFile.WriteLine(entry._date);
                 outputFile.WriteLine(entry._prompt);
                 outputFile.WriteLine(entry._entry);
+                outputFile.WriteLine(entry._mood);
             }
         }
         Console.WriteLine($"...The journal \"{fileName}\" has been saved...");
