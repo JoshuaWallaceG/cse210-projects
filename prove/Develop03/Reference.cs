@@ -4,6 +4,8 @@ public class Reference
     private string _chapter;
     private string _verses;
 
+    //Two different constructors depending if the user has a single verse, or multi-verse reference
+
     public Reference(string book, string chapter, string verse)
     {
         _book = book;

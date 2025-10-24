@@ -23,6 +23,7 @@ public class Word
     {
         if (_hidden)
         {
+            //Creates a temporary string and adds the correct amount if "_" to it, then returns said string
             string hiddenWord = "";
             for (int i = 0; i < _word.Length; i++)
             {
