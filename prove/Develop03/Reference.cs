@@ -20,7 +20,7 @@ public class Reference
         _verses = $"{startingVerse}-{endingVerse}";
     }
 
-    public string getReference()
+    public string GetReference()
     {
         return $"{_book} {_chapter}:{_verses}";
     }

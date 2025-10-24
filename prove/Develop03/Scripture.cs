@@ -19,7 +19,7 @@ public class Scripture
     }
     
     public static Random random = new Random();
-    public void blankPercent(int percent)
+    public void BlankPercent(int percent)
     {
         //Because users can choose the blank percentage to be a low amount like 1%, I have a loop that makes sure that at least 1 word is blanked each round
         bool blankedAtLeastOne = false;
@@ -27,35 +27,35 @@ public class Scripture
         {
             for (int i = 0; i < _wordList.Count; i++)
             {
-                if (random.Next(0, 100) < percent && !_wordList[i].getHidden())
+                if (random.Next(0, 100) < percent && !_wordList[i].GetHidden())
                 {
-                    _wordList[i].hideWord();
+                    _wordList[i].HideWord();
                     blankedAtLeastOne = true;
                 }
             }
         } while (!blankedAtLeastOne);
     }
 
-    public void printVerse()
+    public void PrintVerse()
     {
         foreach (Word w in _wordList)
         {
-            Console.Write($"{w.getWord()} ");
+            Console.Write($"{w.GetWord()} ");
         }
         Console.WriteLine();
     }
 
-    public void printReference()
+    public void PrintReference()
     {
-        Console.WriteLine(_reference.getReference());
+        Console.WriteLine(_reference.GetReference());
     }
 
     //Simply goes through and checks if all the words are blanked. If it finds a single word that is not blanked, it returns early with false
-    public bool checkIfFullyBlanked()
+    public bool CheckIfFullyBlanked()
     {
         for (int i = 0; i < _wordList.Count; i++)
         {
-            if (!_wordList[i].getHidden())
+            if (!_wordList[i].GetHidden())
             {
                 return false;
             }

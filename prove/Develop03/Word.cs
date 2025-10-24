@@ -9,17 +9,17 @@ public class Word
         _hidden = hidden;
     }
 
-    public bool getHidden()
+    public bool GetHidden()
     {
         return _hidden;
     }
 
-    public void hideWord()
+    public void HideWord()
     {
         _hidden = true;
     }
 
-    public string getWord()
+    public string GetWord()
     {
         if (_hidden)
         {

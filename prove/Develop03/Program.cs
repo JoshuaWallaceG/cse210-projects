@@ -21,7 +21,7 @@ class Program
         //string myScriptureEndingVerse = "#";
 
         bool validBlankNum, fullyBlanked;
-        int blankPercent;
+        int blankPercentage;
         string userInput;
         
         Reference myScriptureReference = new Reference(myScriptureBook, myScriptureChapter, myScriptureStartingVerse);
@@ -31,9 +31,9 @@ class Program
         Console.Write("Please enter your per-round blank percentage between 1-100: ");
         do
         {
-            blankPercent = int.Parse(Console.ReadLine());
+            blankPercentage = int.Parse(Console.ReadLine());
             //Simple check to confirm that blank percentage is within 1-100
-            if (blankPercent > 100 || blankPercent < 1)
+            if (blankPercentage > 100 || blankPercentage < 1)
             {
                 Console.Write("Please enter a valid blank percentage between 1-100: ");
                 validBlankNum = false;
@@ -46,17 +46,17 @@ class Program
 
         //In order to both begin with no blanks AND end with it fully blanked, I have to have atleast 1 of the  prints/clear screens outside the loop.
         Console.Clear();
-        myScripture.printReference();
-        myScripture.printVerse();
+        myScripture.PrintReference();
+        myScripture.PrintVerse();
         do
         {
-            Console.WriteLine($"\nPress enter to blank {blankPercent}% more, or type \"quit\" to end.");
+            Console.WriteLine($"\nPress enter to blank {blankPercentage}% more, or type \"quit\" to end.");
             userInput = Console.ReadLine().ToLower();
-            myScripture.blankPercent(blankPercent);
+            myScripture.BlankPercent(blankPercentage);
             Console.Clear();
-            myScripture.printReference();
-            myScripture.printVerse();
-            fullyBlanked = myScripture.checkIfFullyBlanked();
+            myScripture.PrintReference();
+            myScripture.PrintVerse();
+            fullyBlanked = myScripture.CheckIfFullyBlanked();
         } while (!fullyBlanked && userInput != "quit");
     }
 }
