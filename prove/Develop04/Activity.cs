@@ -50,7 +50,6 @@ public class Activity()
             Console.Write("^");
             Thread.Sleep(250);
             Console.Write("\b \b");
-
         }
     }
 
