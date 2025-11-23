@@ -8,6 +8,7 @@ public static class FileFunctions
         using (StreamWriter outputFile = new StreamWriter(fileName))
         {
             outputFile.WriteLine(points);
+            //Loops through eachgoal and uses its spesific output to file function to save each one
             foreach(Goal g in goals)
             {
              outputFile.WriteLine(g.OutputGoalToFileString());   
@@ -32,6 +33,7 @@ public static class FileFunctions
                 bool firstLine = true;
                 foreach(string line in lines)
                 {
+                    //Because the first line is always going to be points, we just do a simple check for it and ignore it after
                     if(firstLine)
                     {
                         points = int.Parse(line);
@@ -39,10 +41,10 @@ public static class FileFunctions
                     }
                     else
                     {
+                        //A switch statement based off of the first character of each new line, as thats where the goal type is stored
                         switch (line[0])
                         {
                             case '1':
-                                Console.Read();
                                 SimpleGoal sg = new SimpleGoal();
                                 sg.LoadGoalFromFileLine(line);
                                 goals.Add(sg);
@@ -56,6 +58,11 @@ public static class FileFunctions
                                 TallyGoal tg = new TallyGoal();
                                 tg.LoadGoalFromFileLine(line);
                                 goals.Add(tg);
+                                break;
+                            case '4':
+                                MultiplicativeGoal mg = new MultiplicativeGoal();
+                                mg.LoadGoalFromFileLine(line);
+                                goals.Add(mg);
                                 break;
                         }
                     }

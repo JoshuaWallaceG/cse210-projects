@@ -3,6 +3,18 @@ using System.Reflection.Metadata.Ecma335;
 
 class Program
 {
+    /*
+    I demonstrated creativity in this project by adding an additional goal type: a multiplicative goal
+
+    There are many goals in life, especially the ones we do on the daily, that don't become inherently more difficult, they just become more boring, and thus, we don't do them. 
+    For example, we can often feel a burst of motivation to start journaling daily or going to bed on time every night, but after a few days, the motivation dies and we drop the attempted habit.
+
+    Thus, with a multiplicative goal, the point reward increases each time we do it. 
+    At the beginning, the novelty of doing something new is often all the motivation we need, and thus, we start off with a very low point reward amount. 
+    The multiplicative goal multiplies our point reward by an increasing amount each time we do the reward. (1.0x -> 1.1x -> 1.2x -> 1.3x -> etc) 
+    As our motivation naturally decreases, the amount of awarded points we get increases, thus maintaining the incentive to complete our goal.
+    */
+
     static void Main(string[] args)
     {
         bool running = true;
@@ -19,6 +31,7 @@ class Program
             {
                 case "1": //Create Goal
                     Console.Clear();
+                    //Switch statement to create the right type of goal
                     switch (GetCreateGoalType())
                     {
                         case 1:
@@ -35,6 +48,11 @@ class Program
                             TallyGoal tg = new TallyGoal();
                             tg.NewGoal();
                             goals.Add(tg);
+                            break;
+                        case 4:
+                            MultiplicativeGoal mg = new MultiplicativeGoal();
+                            mg.NewGoal();
+                            goals.Add(mg);
                             break;
                     }
                     break;
@@ -54,8 +72,14 @@ class Program
                     break;
                 case "5": //Record event
                     Console.Clear();
-                    ListGoals(goals);
-                    points += goals[GetCompletedGoal()-1].CompleteGoal();
+                    if(goals.Count == 0)
+                    {
+                        Console.WriteLine("You have no goals yet!");
+                    }
+                    else{
+                        ListGoals(goals);
+                        points += goals[GetCompletedGoal()-1].CompleteGoal();
+                    }
                     break;
                 case "0": //Quit
                     Console.WriteLine("Goodbye!");
@@ -63,11 +87,12 @@ class Program
                     break;
                 default:
                     Console.Clear();
-                    Console.WriteLine("Invalid option. Please selection an option from the menu (0 - 5)");
+                    Console.WriteLine("Invalid option. Please select an option from the menu (0 - 5)");
                     break;
             }
         }
     }
+
     public static void DisplayMenuOptions()
     {
         Console.WriteLine("1: Create new goal");
@@ -87,15 +112,15 @@ class Program
             Console.WriteLine("1. Simple Goal");
             Console.WriteLine("2. Eternal Goal");
             Console.WriteLine("3. Tally Goal");
+            Console.WriteLine("4. Multiplicative Goal");
             Console.Write("What type of goal would you like to create? ");
             choice = int.Parse(Console.ReadLine());
-            if(choice > 3 || choice < 1)
+            if(choice > 4 || choice < 1)
             {
                 Console.Clear();
                 Console.WriteLine("Invalid choice.");
             }
-        }while(choice > 3 || choice < 1);
-
+        }while(choice > 4 || choice < 1); //Only lets the user select the 4 types of choices available
         return choice;
     }
 
@@ -108,6 +133,7 @@ class Program
     public static void ListGoals(List<Goal> goals)
     {
         Console.WriteLine("Your goals are:");
+        //Because there is no way to "check" where you are in a foreach loop, so we have a manual counter to print off our list
         int counter = 1;
         foreach (Goal g in goals)
         {
@@ -117,8 +143,6 @@ class Program
         }
         Console.WriteLine();
     }
-
-    
 }
 
 

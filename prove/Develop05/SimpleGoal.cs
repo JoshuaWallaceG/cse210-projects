@@ -42,6 +42,7 @@ public class SimpleGoal : Goal
 
     public override string OutputGoalToFileString()
     {
+        //Format: Type~Goal~GoalDetails~Points~TallyCount~TallyGoal~BonusPoints~IsCompleted
         return $"1~{_title}~{_details}~{_associatedPoints}~{_isCompleted}";
     }
 

@@ -5,7 +5,6 @@ public class TallyGoal : Goal
     int _associatedBonusPoints;
     bool _isCompleted;
 
-
     public override void NewGoal()
     {
         Console.Write("Please enter what would like to title this goal: ");
@@ -18,7 +17,6 @@ public class TallyGoal : Goal
         _tallyGoal = int.Parse(Console.ReadLine());
         Console.Write("Please enter the amount of bonus points to be awarded upon completion: ");
         _associatedBonusPoints = int.Parse(Console.ReadLine());
-
     }
 
     public override int CompleteGoal()
@@ -55,7 +53,7 @@ public class TallyGoal : Goal
     public override string OutputGoalToFileString()
     {
         //Format: Type~Goal~GoalDetails~Points~TallyCount~TallyGoal~BonusPoints~IsCompleted
-        return $"2~{_title}~{_details}~{_associatedPoints}~{_tallyCount}~{_tallyGoal}~{_associatedBonusPoints}~{_isCompleted}";
+        return $"3~{_title}~{_details}~{_associatedPoints}~{_tallyCount}~{_tallyGoal}~{_associatedBonusPoints}~{_isCompleted}";
     }
 
     public override void LoadGoalFromFileLine(string fileLine)
