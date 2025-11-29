@@ -4,6 +4,12 @@ class Program
 {
     static void Main(string[] args)
     {
-        Console.WriteLine("Hello FinalProject World!");
+        Game g = new Game();
+        g.Run();
     }
+}
+
+public enum HeroType
+{
+    Warrior, Rouge, Mage
 }
