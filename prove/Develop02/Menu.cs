@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 public static class Menu
 {
-        public static void DisplayMenuOptions()
+    public static void DisplayMenuOptions()
     {
         Console.WriteLine("1: Write Entry");
         Console.WriteLine("2: Display Entries");

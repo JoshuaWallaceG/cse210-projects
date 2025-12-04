@@ -1,7 +1,10 @@
 public class Warrior : Hero
 {
-    public Warrior(string name,  HeroType heroType, TradeType tradeType, Item ownedItem, double buySellMultiplier) 
-        : base(name, heroType, tradeType, ownedItem, buySellMultiplier){}
+    public Warrior(string name, TradeType tradeType, Item ownedItem, double buySellMultiplier) 
+        : base(name, tradeType, ownedItem, buySellMultiplier)
+    {
+        _heroType = HeroType.Warrior;
+    }
 
     public override void BuyOffer()
     {
@@ -14,24 +17,23 @@ public class Warrior : Hero
 
     public override void LeaveShop()
     {
-        
-        Console.WriteLine($"{_name} the Warrior storms into the ");
+    
     }
 
     public override void EnterShop()
     {
-        
+        Console.WriteLine($"{_name} the Warrior storms into the ");
     }
 
     public override void DebugPresentSelf()
     {
         if(_tradeType == TradeType.Buying)
         {
-            Console.WriteLine($"Hello! My name is {_name} the Warrior, and I want ot buy anything w/ a multiplier of {_buySellMultiplier}");
+            Console.WriteLine($"Hello! My name is {_name} the Warrior, and I want to buy anything using a multiplier of {_buySellMultiplier}");
         }
         else
         {
-            Console.WriteLine($"Hello! My name is {_name} the Warrior, and I want to sell my {_ownedItem.GetItemName()} w/ a multiplier of {_buySellMultiplier}");
+            Console.WriteLine($"Hello! My name is {_name} the Warrior, and I want to sell my {_ownedItem.GetItemName()} using a multiplier of {_buySellMultiplier}");
         }
 
     }

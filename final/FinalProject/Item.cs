@@ -29,12 +29,17 @@ public abstract class Item{
 
     public static Item GenerateRandomItem()
     {
-        switch(Game.Random.Next(0))   //FIX THIS
+        switch(Game.Random.Next(0, 3))
         {
             case 0:
             return Armor.GenerateRandomArmor();
+            case 1:
+            return Weapon.GenerateRandomWeapon();
+            case 2:
+            return Relic.GenerateRandomRelic();
+            default:
+            return new Weapon(new ItemAttribute("Glitched", 1), HeroType.Rouge, new Weapon.WeaponType("Bug Swatter", 10));
         }
-        return Armor.GenerateRandomArmor(); //REMOVE THIS
     }
 
 

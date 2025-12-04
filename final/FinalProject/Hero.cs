@@ -24,11 +24,11 @@ public abstract class Hero{
         //Making a random double between .75 and 1.25 by getting 75-125 and dividing it by 100
         double randomBuySellMultiplier = (double)Game.Random.Next(75, 126) / 100;
 
-        //Determining if our hero will have the TradeType of Buying or Selling. If Buying, there is no need for a held item. If selling, we generate a new one
+        //Determining if our hero will have the TradeType of Buying or Selling. 
+        // -> If selling, we generate a random item. If buying, there is no need for a held item
         Item randomItem;
         TradeType randomTradeType;
-                               //FIX THIS
-        if(Game.Random.Next(2) == 0)
+        if(Game.Random.Next(0, 2) == 0)
         {
             //Selling
             randomItem = Item.GenerateRandomItem();
@@ -36,30 +36,25 @@ public abstract class Hero{
         }
         else
         {
+            //Buying
             randomItem = null;
             randomTradeType = TradeType.Buying;
         }
 
-        //Determining our hero type. Once we have, we will have already generated all the other needed variables, and can generate the hero here
-        HeroType randomHeroType;
-        //switch(random.Next(3))
-        switch(Game.Random.Next(0))
+        //Rolls to see what type of hero to make, and then uses the previously generated random variables to create it
+        switch(Game.Random.Next(0, 3))
         {
             case 0:
-            randomHeroType = HeroType.Warrior;
-            return new Warrior(randomName, randomHeroType, randomTradeType, randomItem, randomBuySellMultiplier);
+            return new Warrior(randomName, randomTradeType, randomItem, randomBuySellMultiplier);
 
             case 1:
-            randomHeroType = HeroType.Mage;
-            return new Warrior(randomName, randomHeroType, randomTradeType, randomItem, randomBuySellMultiplier); //FIX THIS
+            return new Rouge(randomName, randomTradeType, randomItem, randomBuySellMultiplier);
 
             case 2:
-            randomHeroType = HeroType.Rouge;
-            return new Warrior(randomName, randomHeroType, randomTradeType, randomItem, randomBuySellMultiplier); // FIX THIS
+            return new Mage(randomName, randomTradeType, randomItem, randomBuySellMultiplier);
 
             default:
-            randomHeroType = HeroType.Warrior; ///DELETE THIS ENTIRE BRANCH
-            return new Warrior(randomName, randomHeroType, randomTradeType, randomItem, randomBuySellMultiplier);
+            return new Warrior("Glitched Bob", TradeType.Buying, null, 1.0);
         }
     }
 
@@ -69,10 +64,9 @@ public abstract class Hero{
     protected double _buySellMultiplier;
     protected TradeType _tradeType;
 
-    protected Hero(string name,  HeroType heroType, TradeType tradeType, Item ownedItem, double buySellMultiplier)
+    protected Hero(string name, TradeType tradeType, Item ownedItem, double buySellMultiplier)
     {
         _name = name;
-        _heroType = heroType;
         _tradeType = tradeType;
         _ownedItem = ownedItem;
         _buySellMultiplier = buySellMultiplier;
