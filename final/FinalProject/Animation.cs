@@ -1,7 +1,8 @@
 public static class Animation
 {
-    public static void Typing(int seconds)
+    public static void Typing(int seconds, string heroName)
     {
+        Console.Write($"{heroName}: ");
         for (int i = 0; i < seconds; i++)
         {
             Console.Write(".");

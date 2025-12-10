@@ -1,10 +1,5 @@
 public abstract class Hero{
 
-    public enum TradeType
-    {
-        Buying, Selling
-    }
-
     protected static List<string> Names = new List<string>
     {
         "Alden", "Bran", "Cedric", "Dorian", "Elias", "Faris", "Garrick", "Hale", "Jorin", "Kael",
@@ -63,6 +58,7 @@ public abstract class Hero{
     protected Item _ownedItem;
     protected double _buySellMultiplier;
     protected TradeType _tradeType;
+    protected double _itemMatchMultiplier = 1.25;
 
     protected Hero(string name, TradeType tradeType, Item ownedItem, double buySellMultiplier)
     {
@@ -74,7 +70,11 @@ public abstract class Hero{
 
     public abstract void EnterShop();
     public abstract void LeaveShop();
-    public abstract void BuyOffer();
+    public virtual void BuyOffer(List<Item> playerInventory){}
     public abstract void SellOffer();
+    public TradeType GetTradeType()
+    {
+        return _tradeType;
+    }
     public abstract void DebugPresentSelf();
 }

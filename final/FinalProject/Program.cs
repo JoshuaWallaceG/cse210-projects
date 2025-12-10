@@ -13,3 +13,8 @@ public enum HeroType
 {
     Warrior, Rouge, Mage
 }
+
+public enum TradeType
+{
+    Buying, Selling
+}

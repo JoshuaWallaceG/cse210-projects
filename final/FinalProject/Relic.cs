@@ -26,7 +26,7 @@ public class Relic : Item{
     {
         RelicType randomType = RelicTypes[Game.Random.Next(RelicTypes.Count)];
         ItemAttribute randomAttribute = Attributes[Game.Random.Next(Attributes.Count)];
-        return new Relic(randomAttribute, HeroType.Warrior, randomType);
+        return new Relic(randomAttribute, HeroType.Mage, randomType);
     }
 
     RelicType _relicType;

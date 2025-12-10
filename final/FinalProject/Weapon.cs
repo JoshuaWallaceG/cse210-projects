@@ -26,7 +26,7 @@ public class Weapon : Item{
     {
         WeaponType randomType = WeaponTypes[Game.Random.Next(WeaponTypes.Count)];
         ItemAttribute randomAttribute = Attributes[Game.Random.Next(Attributes.Count)];
-        return new Weapon(randomAttribute, HeroType.Warrior, randomType);
+        return new Weapon(randomAttribute, HeroType.Rouge, randomType);
     }
 
     WeaponType _weaponType;

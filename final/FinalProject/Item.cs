@@ -52,6 +52,11 @@ public abstract class Item{
         _preferredHero = preferredHero;
     }
 
+    public HeroType GetPreferredHero()
+    {
+        return _preferredHero;
+    }
+
     public abstract string GetItemName();
     public abstract int GetItemTrueBaseValue();
     public abstract int GetItemCalculatedBaseValue();
