@@ -27,53 +27,85 @@ public class Mage : Hero
         }
     }
 
-    public override void BuyOffer(List<Item> playerInventory)
+    public override void LeaveShop(bool performedTrade)
     {
-        int preferredItems = 0;
-        List<Item> preferredItemsList = new List<Item>();
-        Item wantedItem;
-        int buyingPrice;
-
-        foreach(Item i in playerInventory) //Finding total amount of items that the warrior likes
+        if (performedTrade)
         {
-            if(i.GetPreferredHero() == HeroType.Mage)
+            switch(Game.Random.Next(0, 2))
             {
-                preferredItemsList.Add(i);
-                preferredItems++;
+                case 0:
+                Animation.Typing(2, _name);
+                Console.WriteLine($"\"A fair exchange. You have my thanks. It's been a pleasure.\"");
+                break;
+                case 1:
+                Animation.Typing(2, _name);
+                Console.WriteLine($"\"Excellent. May this trade benefit us both. Goodbye.\"");
+                break;
             }
-        }
-
-        if (preferredItemsList.Count() == 0)
-        {
-            wantedItem = playerInventory[Game.Random.Next(0, playerInventory.Count())];
-            buyingPrice = (int)(wantedItem.GetItemCalculatedBaseValue() * _buySellMultiplier);
-
-            Animation.Typing(2, _name);
-            Console.WriteLine("\"Sir, you don't seem to have any relics of magic here today. How unfortunate.\"");
-            Animation.Typing(2, _name);
-            Console.WriteLine($"\"But I must say, this {wantedItem.GetItemName()} is still rather useful.\"");
-            Animation.Typing(3, _name);
-            Console.WriteLine($"\"I will offer you ${buyingPrice} for it. Would that be sufficent for you?\"");
-            Game.DisplayOfferMenu();
-            Console.ReadLine();
         }
         else
         {
-            wantedItem = preferredItemsList[Game.Random.Next(0, preferredItemsList.Count())];
-            buyingPrice = (int)(wantedItem.GetItemCalculatedBaseValue() * _buySellMultiplier * _itemMatchMultiplier);
+            switch(Game.Random.Next(0, 2)){
+                case 0:
+                Animation.Typing(2, _name);
+                Console.WriteLine($"\"Very well. I will continue my search elsewhere. Farewell.\"");
+                break;
+                case 1:
+                Animation.Typing(2, _name);
+                Console.WriteLine($"\"It seems we could not reach an agreement today. No matter. Adieu.\"");
+                break;
+            }
+        }
+
+        Console.WriteLine($"{_name} the Mage leaves your shop.");
+    }
+
+    public override void PreferredItemOfferDialouge(Item wantedItem, int buyingPrice)
+    {
+        Animation.Typing(2, _name);
+        Console.WriteLine("\"How delightful. You have relics that can fufill my magic needs.\"");
+        Animation.Typing(2, _name);
+        Console.WriteLine($"\"Your {wantedItem.GetItemName()} is truly one of a kind.\"");
+        Animation.Typing(3, _name);
+        Console.WriteLine($"\"Do you see ${buyingPrice} as a fair price?\"");
+    }
+
+    public override void NonPreferredItemOfferDialouge(Item wantedItem, int buyingPrice)
+    {
+        Animation.Typing(2, _name);
+        Console.WriteLine("\"Sir, you don't seem to have any relics of magic here today. How unfortunate.\"");
+        Animation.Typing(2, _name);
+        Console.WriteLine($"\"But I must say, this {wantedItem.GetItemName()} is still rather useful.\"");
+        Animation.Typing(3, _name);
+        Console.WriteLine($"\"I will offer you ${buyingPrice} for it. Would that be sufficent for you?\"");
+    }
+
+    public override void EmptyInventoryDialogue()
+    {
+        switch(Game.Random.Next(0, 2))
+        {
+            case 0:
             Animation.Typing(2, _name);
-            Console.WriteLine("\"How delightful. You have relics that can fufill my magic needs.\"");
+            Console.WriteLine($"\"Oh, it appears there is nothing here for purchase at the moment. A pity, but understandable.\"");
+            break;
+            case 1:
             Animation.Typing(2, _name);
-            Console.WriteLine($"\"Your {wantedItem.GetItemName()} is truly one of a kind.\"");
-            Animation.Typing(3, _name);
-            Console.WriteLine($"\"Do you see ${buyingPrice} as a fair price?\"");
-            Game.DisplayOfferMenu();
-            Console.ReadLine();
+            Console.WriteLine($"\"Hm, an empty inventory. I wanted to buy, but preparation cannot be rushed, I suppose.\"");
+            break;
         }
     }
 
-    public override void LeaveShop(){}
-    public override void SellOffer(){}
+    public override void ItemSellOfferDialouge(Item ownedItem, int sellingPrice)
+    {
+        Animation.Typing(2, _name);
+        Console.WriteLine("\"I have an item from my collection I would like to sell, should it interest you.\"");
+        Animation.Typing(2, _name);
+        Console.WriteLine($"\"My {ownedItem.GetItemName()} has served its purpose, but no longer suits my needs.\"");
+        Animation.Typing(3, _name);
+        Console.WriteLine($"\"I am seeking ${sellingPrice} in exchange. Does that seem reasonable?\"");
+    }
+
+
     public override void DebugPresentSelf()
     {
         if(_tradeType == TradeType.Buying)

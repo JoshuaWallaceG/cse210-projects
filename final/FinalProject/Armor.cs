@@ -2,11 +2,11 @@ public class Armor : Item{
 
     public struct ArmorType
     {
-        public string _armorName;
+        public string _armorType;
         public int _baseValue; 
 
-        public ArmorType(string armorName, int baseValue){
-            _armorName = armorName;
+        public ArmorType(string armorType, int baseValue){
+            _armorType = armorType;
             _baseValue = baseValue;
         }
     };
@@ -39,7 +39,12 @@ public class Armor : Item{
 
     public override string GetItemName()
     {
-        return $"{_attribute._attributeName} {_armorType._armorName}";
+        return $"{_attribute._attributeName} {_armorType._armorType}";
+    }
+
+    public override string GetItemType()
+    {
+        return $"{_armorType._armorType}";
     }
     
     public override int GetItemTrueBaseValue()

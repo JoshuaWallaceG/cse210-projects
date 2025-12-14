@@ -42,6 +42,11 @@ public class Relic : Item{
         return $"{_attribute._attributeName} {_relicType._relicType}";
     }
     
+    public override string GetItemType()
+    {
+        return $"{_relicType._relicType}";
+    }
+
     public override int GetItemTrueBaseValue()
     {
         return _relicType._baseValue;

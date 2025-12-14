@@ -26,54 +26,83 @@ public class Rouge : Hero
         }
     }
 
-    public override void BuyOffer(List<Item> playerInventory)
+    public override void LeaveShop(bool performedTrade)
     {
-        int preferredItems = 0;
-        List<Item> preferredItemsList = new List<Item>();
-        Item wantedItem;
-        int buyingPrice;
-
-        foreach(Item i in playerInventory) //Finding total amount of items that the warrior likes
+        if (performedTrade)
         {
-            if(i.GetPreferredHero() == HeroType.Rouge)
+            switch(Game.Random.Next(0, 2))
             {
-                preferredItemsList.Add(i);
-                preferredItems++;
+                case 0:
+                Animation.Typing(2, _name);
+                Console.WriteLine($"\"Pleasure doing business with someone who knows a good deal. Peace!\"");
+                break;
+                case 1:
+                Animation.Typing(2, _name);
+                Console.WriteLine($"\"See? Easy money. For both of us. Catch you later!\"");
+                break;
             }
-        }
-        
-        if (preferredItemsList.Count() == 0)
-        {
-            wantedItem = playerInventory[Game.Random.Next(0, playerInventory.Count())];
-            buyingPrice = (int)(wantedItem.GetItemCalculatedBaseValue() * _buySellMultiplier);
-
-            Animation.Typing(2, _name);
-            Console.WriteLine("\"Aw man, you don't got anything that can stab in here. Huge bummer.\"");
-            Animation.Typing(2, _name);
-            Console.WriteLine($"\"But honestly, this {wantedItem.GetItemName()} isn't half bad...\"");
-            Animation.Typing(3, _name);
-            Console.WriteLine($"\"I'll take it off your hands for ${buyingPrice}. What do you say?\"");
-            Game.DisplayOfferMenu();
-            Console.ReadLine();
         }
         else
         {
-            wantedItem = preferredItemsList[Game.Random.Next(0, preferredItemsList.Count())];
-            buyingPrice = (int)(wantedItem.GetItemCalculatedBaseValue() * _buySellMultiplier * _itemMatchMultiplier);
+            switch(Game.Random.Next(0, 2)){
+                case 0:
+                Animation.Typing(2, _name);
+                Console.WriteLine($"\"Guess we're both walking away empty-handed. Bummer. See ya'.\"");
+                break;
+                case 1:
+                Animation.Typing(2, _name);
+                Console.WriteLine($"\"Eh, it was worth a shot. I'll live. Sayonara, shopkeep'!\"");
+                break;
+            }
+        }
+        Console.WriteLine($"{_name} the Rouge sneaks out of your shop.");
+    }
 
+    public override void PreferredItemOfferDialouge(Item wantedItem, int buyingPrice)
+    {
+        Animation.Typing(2, _name);
+        Console.WriteLine("\"Oh hey, you got some good stuff for slicing in here!\"");
+        Animation.Typing(2, _name);
+        Console.WriteLine($"\"This {wantedItem.GetItemName()} here is really speaking my language.\"");
+        Animation.Typing(3, _name);
+        Console.WriteLine($"\"Tell me keep', would you take ${buyingPrice} for this guy?\"");
+    }
+
+    public override void NonPreferredItemOfferDialouge(Item wantedItem, int buyingPrice)
+    {
+        Animation.Typing(2, _name);
+        Console.WriteLine("\"Aw man, you don't got anything that can stab in here. Huge bummer.\"");
+        Animation.Typing(2, _name);
+        Console.WriteLine($"\"But honestly, this {wantedItem.GetItemName()} isn't half bad...\"");
+        Animation.Typing(3, _name);
+        Console.WriteLine($"\"I'll take it off your hands for ${buyingPrice}. What do you say?\"");
+    }
+
+    public override void EmptyInventoryDialogue()
+    {
+        switch(Game.Random.Next(0, 2))
+        {
+            case 0:
             Animation.Typing(2, _name);
-            Console.WriteLine("\"Oh hey, you got some good stuff for slicing in here!\"");
+            Console.WriteLine($"\"Huh. Empty shelves. I was looking to buy, but I guess I showed up on inventory day.\"");
+            break;
+            case 1:
             Animation.Typing(2, _name);
-            Console.WriteLine($"\"This {wantedItem.GetItemName()} here is really speaking my language.\"");
-            Animation.Typing(3, _name);
-            Console.WriteLine($"\"Tell me keep', would you take ${buyingPrice} for this guy?\"");
-            Game.DisplayOfferMenu();
-            Console.ReadLine();
+            Console.WriteLine($"\"Wow, this place is baren. Not even one dusty trinket to buy? That's impressive.\"");
+            break;
         }
     }
 
-    public override void LeaveShop(){}
-    public override void SellOffer(){}
+    public override void ItemSellOfferDialouge(Item ownedItem, int sellingPrice)
+    {
+        Animation.Typing(2, _name);
+        Console.WriteLine("\"Alright don't ask me how I got it, but I got something I'd like to sell.\"");
+        Animation.Typing(2, _name);
+        Console.WriteLine($"\"I think that my {ownedItem.GetItemName()} would fit your shelves nicely.\"");
+        Animation.Typing(3, _name);
+        Console.WriteLine($"\"I'm thinking ${sellingPrice}. What do you say?\"");
+    }
+
     public override void DebugPresentSelf()
     {
         if(_tradeType == TradeType.Buying)

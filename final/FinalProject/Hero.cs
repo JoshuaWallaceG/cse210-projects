@@ -68,10 +68,85 @@ public abstract class Hero{
         _buySellMultiplier = buySellMultiplier;
     }
 
+    public int BuyOffer(List<Item> playerInventory)
+    {
+        int preferredItems = 0;
+        List<Item> preferredItemsList = new List<Item>();
+        Item wantedItem;
+        int buyingPrice;
+        bool choice;
+
+        foreach(Item i in playerInventory) //Finding total amount of items that the hero likes
+        {
+            if(i.GetPreferredHero() == _heroType)
+            {
+                preferredItemsList.Add(i);
+                preferredItems++;
+            }
+        }
+
+        if (preferredItemsList.Count() > 0) //If they have a preferred item
+        {
+            wantedItem = preferredItemsList[Game.Random.Next(0, preferredItemsList.Count())];
+            buyingPrice = (int)(wantedItem.GetItemCalculatedBaseValue() * _buySellMultiplier * _itemMatchMultiplier);
+            PreferredItemOfferDialouge(wantedItem, buyingPrice);
+        }
+        else if (playerInventory.Count() > 0) //If they don't have a preferred item but still have an item
+        {
+            wantedItem = playerInventory[Game.Random.Next(0, playerInventory.Count())];
+            buyingPrice = (int)(wantedItem.GetItemCalculatedBaseValue() * _buySellMultiplier);
+            NonPreferredItemOfferDialouge(wantedItem, buyingPrice);
+        }
+        else //If they have no items at all
+        {
+            EmptyInventoryDialogue();
+            return 0;
+        }
+
+        Animation.DisplayOfferMenu();
+        choice = Game.GetAcceptBuyOfferChoice();
+
+        if (choice == true)
+        {
+            playerInventory.Remove(wantedItem);
+            return buyingPrice;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    
+    public int SellOffer(List<Item> playerInventory,  int playerMoney)
+    {
+        bool choice;
+        int sellingPrice;
+        sellingPrice = (int)(_ownedItem.GetItemCalculatedBaseValue() * _buySellMultiplier);
+
+        ItemSellOfferDialouge(_ownedItem, sellingPrice);
+        Console.WriteLine($"-----[{_ownedItem.GetItemType()} base value: ${_ownedItem.GetItemTrueBaseValue()}]-----");
+        Animation.DisplayOfferMenu();
+        choice = Game.GetAcceptSellOfferChoice(playerInventory, playerMoney, sellingPrice);
+
+        if (choice == true)
+        {
+            playerInventory.Add(_ownedItem);
+            return sellingPrice;
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
     public abstract void EnterShop();
-    public abstract void LeaveShop();
-    public virtual void BuyOffer(List<Item> playerInventory){}
-    public abstract void SellOffer();
+    public abstract void LeaveShop(bool preformedTrade);
+
+    public abstract void ItemSellOfferDialouge(Item offeredItem, int sellingPrice);
+    public abstract void PreferredItemOfferDialouge(Item wantedItem, int buyingPrice);
+    public abstract void NonPreferredItemOfferDialouge(Item wantedItem, int buyingPrice);
+    public abstract void EmptyInventoryDialogue();
+
     public TradeType GetTradeType()
     {
         return _tradeType;

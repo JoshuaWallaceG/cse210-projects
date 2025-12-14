@@ -22,7 +22,7 @@ public abstract class Item{
         new ItemAttribute("Used", 1.0),
         new ItemAttribute("Dusty", 0.95),
 
-        new ItemAttribute("Rusty", 0.9),
+        new ItemAttribute("Rusted", 0.9),
         new ItemAttribute("Cursed", 0.8),
         new ItemAttribute("Broken", 0.7)
     };
@@ -57,6 +57,7 @@ public abstract class Item{
         return _preferredHero;
     }
 
+    public abstract string GetItemType();
     public abstract string GetItemName();
     public abstract int GetItemTrueBaseValue();
     public abstract int GetItemCalculatedBaseValue();

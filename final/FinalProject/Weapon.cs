@@ -42,6 +42,11 @@ public class Weapon : Item{
         return $"{_attribute._attributeName} {_weaponType._weaponType}";
     }
     
+    public override string GetItemType()
+    {
+        return $"{_weaponType._weaponType}";
+    }
+
     public override int GetItemTrueBaseValue()
     {
         return _weaponType._baseValue;
