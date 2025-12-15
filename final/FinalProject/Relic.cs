@@ -1,5 +1,7 @@
 public class Relic : Item{
 
+    RelicType _relicType;
+
     public struct RelicType
     {
         public string _relicType;
@@ -21,7 +23,6 @@ public class Relic : Item{
         new RelicType("Leather Charm", 50)
     };
 
-
     public static Relic GenerateRandomRelic()
     {
         RelicType randomType = RelicTypes[Game.Random.Next(RelicTypes.Count)];
@@ -29,13 +30,10 @@ public class Relic : Item{
         return new Relic(randomAttribute, HeroType.Mage, randomType);
     }
 
-    RelicType _relicType;
-
     public Relic(ItemAttribute attribute, HeroType preferredHero, RelicType relicType) : base(attribute, preferredHero)
     {
         _relicType = relicType;
     }
-
 
     public override string GetItemName()
     {

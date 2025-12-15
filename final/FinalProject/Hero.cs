@@ -1,6 +1,13 @@
 public abstract class Hero{
 
-    protected static List<string> Names = new List<string>
+    protected string _name;
+    protected HeroType _heroType;
+    protected Item _ownedItem;
+    protected double _buySellMultiplier;
+    protected TradeType _tradeType;
+    protected double _itemMatchMultiplier = 1.25;
+
+    protected static List<string> Names = new List<string> //Hardcoded list of names to use while making a new hero
     {
         "Alden", "Bran", "Cedric", "Dorian", "Elias", "Faris", "Garrick", "Hale", "Jorin", "Kael",
         "Lennon", "Marek", "Nyles", "Oren", "Roderick", "Silas", "Tarin", "Vance", "Wes", "Alaric",
@@ -53,13 +60,6 @@ public abstract class Hero{
         }
     }
 
-    protected string _name;
-    protected HeroType _heroType;
-    protected Item _ownedItem;
-    protected double _buySellMultiplier;
-    protected TradeType _tradeType;
-    protected double _itemMatchMultiplier = 1.25;
-
     protected Hero(string name, TradeType tradeType, Item ownedItem, double buySellMultiplier)
     {
         _name = name;
@@ -100,7 +100,7 @@ public abstract class Hero{
         else //If they have no items at all
         {
             EmptyInventoryDialogue();
-            return 0;
+            return 0; //Early return
         }
 
         Animation.DisplayOfferMenu();
@@ -124,6 +124,7 @@ public abstract class Hero{
         sellingPrice = (int)(_ownedItem.GetItemCalculatedBaseValue() * _buySellMultiplier);
 
         ItemSellOfferDialouge(_ownedItem, sellingPrice);
+        //Print out the base value (but without the attribute modifier) of the item for the user to make an educated deal on
         Console.WriteLine($"-----[{_ownedItem.GetItemType()} base value: ${_ownedItem.GetItemTrueBaseValue()}]-----");
         Animation.DisplayOfferMenu();
         choice = Game.GetAcceptSellOfferChoice(playerInventory, playerMoney, sellingPrice);
@@ -139,17 +140,16 @@ public abstract class Hero{
         }
     }
 
-    public abstract void EnterShop();
-    public abstract void LeaveShop(bool preformedTrade);
-
-    public abstract void ItemSellOfferDialouge(Item offeredItem, int sellingPrice);
-    public abstract void PreferredItemOfferDialouge(Item wantedItem, int buyingPrice);
-    public abstract void NonPreferredItemOfferDialouge(Item wantedItem, int buyingPrice);
-    public abstract void EmptyInventoryDialogue();
-
     public TradeType GetTradeType()
     {
         return _tradeType;
     }
+
+    public abstract void EnterShop();
+    public abstract void LeaveShop(bool preformedTrade);
+    public abstract void ItemSellOfferDialouge(Item offeredItem, int sellingPrice);
+    public abstract void PreferredItemOfferDialouge(Item wantedItem, int buyingPrice);
+    public abstract void NonPreferredItemOfferDialouge(Item wantedItem, int buyingPrice);
+    public abstract void EmptyInventoryDialogue();
     public abstract void DebugPresentSelf();
 }

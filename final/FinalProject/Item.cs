@@ -1,5 +1,9 @@
 public abstract class Item{
 
+    protected HeroType _preferredHero;
+    protected ItemAttribute _attribute;
+
+    //We use a struct and make a new datatype to be able to link item attributes to multiplier values
     public struct ItemAttribute
     {
         public string _attributeName;
@@ -12,16 +16,15 @@ public abstract class Item{
 
     };
     
+    //Each item has not only a type (as seen in each subclass) but also an attribute, which will increase or decrease the base value
     protected static List<ItemAttribute> Attributes = new List<ItemAttribute>
     {
         new ItemAttribute("Royal", 1.3),
         new ItemAttribute("Perfect", 1.2),
         new ItemAttribute("Sturdy", 1.1),
-
         new ItemAttribute("Mint", 1.05),
         new ItemAttribute("Used", 1.0),
         new ItemAttribute("Dusty", 0.95),
-
         new ItemAttribute("Rusted", 0.9),
         new ItemAttribute("Cursed", 0.8),
         new ItemAttribute("Broken", 0.7)
@@ -37,14 +40,10 @@ public abstract class Item{
             return Weapon.GenerateRandomWeapon();
             case 2:
             return Relic.GenerateRandomRelic();
-            default:
+            default: //Glitched case for default, because it should never generate this
             return new Weapon(new ItemAttribute("Glitched", 1), HeroType.Rouge, new Weapon.WeaponType("Bug Swatter", 10));
         }
     }
-
-
-    protected HeroType _preferredHero;
-    protected ItemAttribute _attribute;
 
     protected Item(ItemAttribute attribute, HeroType preferredHero)
     {

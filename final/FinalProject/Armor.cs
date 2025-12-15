@@ -1,5 +1,7 @@
 public class Armor : Item{
 
+    ArmorType _armorType;
+
     public struct ArmorType
     {
         public string _armorType;
@@ -21,7 +23,6 @@ public class Armor : Item{
         new ArmorType("Hood", 50)
     };
 
-
     public static Armor GenerateRandomArmor()
     {
         ArmorType randomType = ArmorTypes[Game.Random.Next(ArmorTypes.Count)];
@@ -29,13 +30,10 @@ public class Armor : Item{
         return new Armor(randomAttribute, HeroType.Warrior, randomType);
     }
 
-    ArmorType _armorType;
-
     public Armor(ItemAttribute attribute, HeroType preferredHero, ArmorType armorType) : base(attribute, preferredHero)
     {
         _armorType = armorType;
     }
-
 
     public override string GetItemName()
     {

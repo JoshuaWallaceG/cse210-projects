@@ -3,44 +3,47 @@ using System.Dynamic;
 public class Game
 {
     public static Random Random = new Random();
-        
-    List<Item> playerInventory = new List<Item>();
-    public int playerMoney = 125;
-    int vistingHeroAmount = 0;
-    int offerResult = 0;
-    int currentDay = 1;
+    private List<Item> playerInventory = new List<Item>();
+    private int playerMoney = 125;
+    private int vistingHeroAmount = 0;
+    private int offerResult = 0;
+    private int currentDay = 1;
 
     public void Run(){
 
+        //Player starts off with 2 items
         for(int i = 0; i < 2; i++){
             playerInventory.Add(Item.GenerateRandomItem());
         }
 
+        //This is all pre-game intro
         Animation.DisplayTitleScreen();
         Console.Clear();
         Animation.DisplayStoryIntro();
         Console.WriteLine($"\nPress enter to start!");
         Console.ReadLine();
         Console.Clear();
-    
 
-        while(currentDay <= 7){
-            vistingHeroAmount = Game.Random.Next(1, 3); //2 to 4 heros will visit each day.
+        while(currentDay <= 10){
+            vistingHeroAmount = Game.Random.Next(1, 4); //1 to 3 heros will visit each day.
             Animation.DisplayDayCounter(currentDay);
             Animation.SlowWaiting(2);
             Console.Write($"\nPress enter to begin the day.");
             Console.ReadLine();
             Animation.ClearPastLine();
 
+            //Daily loop
             while(vistingHeroAmount != 0){
-                Hero h = Hero.GenerateRandomHero();
                 Animation.SlowWaiting(Random.Next(3, 7));
-                //Animation.SlowWaiting(1);
                 Console.WriteLine("You hear a knock at the door... Press enter to answer it!");
                 Console.ReadLine();
                 Console.Clear();
+
+                //Trading phase
                 Animation.DisplayInventory(playerInventory, playerMoney);
+                Hero h = Hero.GenerateRandomHero();
                 h.EnterShop();
+                //There is a 50/50 chance that the hero is buying or selling, so we branch off into two logic branches depending on which type
                 if(h.GetTradeType() == TradeType.Buying)
                     {
                         offerResult = h.BuyOffer(playerInventory);
@@ -69,10 +72,13 @@ public class Game
                     }
                 --vistingHeroAmount;
             }
+            //Ending day sequence
             ++currentDay;
             Animation.SlowWaiting(3);
             Console.WriteLine("The day comes to a close...");
         }
+        //After the final day, the ending sequence is played.
+        Animation.DisplayEnding(playerMoney);
     }
 
     public static bool GetAcceptBuyOfferChoice()
@@ -83,12 +89,12 @@ public class Game
             {
                 case "y" or "a":
                 Animation.ClearPastLine();
-                Console.WriteLine("You: \"Sure!\"                                              ");
+                Console.WriteLine("You: \"Sure!\"                                                  ");
                 return true;
 
                 case "n" or "d":
                 Animation.ClearPastLine();
-                Console.WriteLine("You: \"No thank you.\"                                         ");
+                Console.WriteLine("You: \"No thank you.\"                                           ");
                 return false;
 
                 default:
@@ -132,7 +138,7 @@ public class Game
 
                 case "n" or "d":
                 Animation.ClearPastLine();
-                Console.WriteLine("You: \"No thank you.\"                                         ");
+                Console.WriteLine("You: \"No thank you.\"                                             ");
                 return false;
 
                 default:

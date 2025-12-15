@@ -1,5 +1,7 @@
 public class Weapon : Item{
 
+    WeaponType _weaponType;
+
     public struct WeaponType
     {
         public string _weaponType;
@@ -21,7 +23,6 @@ public class Weapon : Item{
         new WeaponType("Club", 50)
     };
 
-
     public static Weapon GenerateRandomWeapon()
     {
         WeaponType randomType = WeaponTypes[Game.Random.Next(WeaponTypes.Count)];
@@ -29,13 +30,10 @@ public class Weapon : Item{
         return new Weapon(randomAttribute, HeroType.Rouge, randomType);
     }
 
-    WeaponType _weaponType;
-
     public Weapon(ItemAttribute attribute, HeroType preferredHero, WeaponType weaponType) : base(attribute, preferredHero)
     {
         _weaponType = weaponType;
     }
-
 
     public override string GetItemName()
     {

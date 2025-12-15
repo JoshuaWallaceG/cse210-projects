@@ -47,7 +47,7 @@ public class Warrior : Hero
             switch(Game.Random.Next(0, 2)){
                 case 0:
                 Animation.Typing(2, _name);
-                Console.WriteLine($"\"I shall march on without it. The war waits for no one! Godspeed!\"");
+                Console.WriteLine($"\"I shall march on without. The war waits for no one! Godspeed!\"");
                 break;
                 case 1:
                 Animation.Typing(2, _name);

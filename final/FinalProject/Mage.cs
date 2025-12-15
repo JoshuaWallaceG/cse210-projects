@@ -6,7 +6,6 @@ public class Mage : Hero
         _heroType = HeroType.Mage;
     }
 
-
     public override void EnterShop()
     {
         Console.WriteLine($"{_name} the Mage visits your shop!");
